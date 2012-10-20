@@ -3,7 +3,7 @@ A fast implementation of Euler's Totient Function in C++
 
 This package contains a very fast version of the phi-function:
 
-    https://en.wikipedia.org/wiki/Euler%27s_totient_function
+https://en.wikipedia.org/wiki/Euler%27s_totient_function
 
 It uses several tricks to make it run fast and also relies on a very fast
 prime number sieve and a binary GCD algorithm.
