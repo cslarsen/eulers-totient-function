@@ -5,7 +5,7 @@ This package consists of
 
   * a fast gcd function,
   * a fast prime number sieve and
-  * a fast implementation of Euler's phi function using the above
+  * a fast implementation of Euler's phi function using the above.
 
 These are fast because
 
