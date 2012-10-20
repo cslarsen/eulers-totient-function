@@ -9,10 +9,9 @@ This package consists of
 
 They are fast because
 
-  * we're using the recursive binary GCD algorithm with bit shifts,
-  * bit sets for primality testing in the Eratosthenes sieve and
-  * Lehmer's conjecture, even-odd reductions and multiplicativity in the phi
-    function.
+  * we're using the recursive binary gcd algorithm with bit shifts,
+  * bitsets for primality testing and
+  * Lehmer's conjecture, even-odd reductions and multiplicativity for phi.
 
 The classes and functions are template-based, so you can plug in any integer
 type you want to, including multiple precision integers (GMPs; although you
@@ -26,8 +25,8 @@ The phi function
 For more information about Euler's totient function, please see
 https://en.wikipedia.org/wiki/Euler%27s_totient_function
 
-Notes on big integers
----------------------
+Note on big integers
+--------------------
 
 The implementation needs to store ALL prime numbers below a certain limit to
 be able to utilize the multiplicativity trick of the phi function.
