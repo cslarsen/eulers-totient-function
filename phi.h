@@ -35,8 +35,7 @@ INT phi(const INT& n)
 
   // Even number?
   if ( (n & 1) == 0 ) {
-    int m = n / 2;
-
+    INT m = n / 2;
     return (m & 1) == 0 ?
       2*phi<PRIMES, INT>(m)
       : phi<PRIMES, INT>(m);
@@ -46,21 +45,21 @@ INT phi(const INT& n)
   for ( typename std::vector<INT>::const_iterator p = primes.first();
         p != primes.last() && *p <= n; ++p )
   {
-    int m = *p;
+    INT m = *p;
 
     if ( n % m )
       continue;
 
     // phi is multiplicative
-    int o = n/m;
-    int d = binary_gcd<INT>(m, o);
+    INT o = n/m;
+    INT d = binary_gcd<INT>(m, o);
 
     return d==1?
         phi<PRIMES, INT>(m) * phi<PRIMES, INT>(o)
       : phi<PRIMES, INT>(m) * phi<PRIMES, INT>(o) * d / phi<PRIMES, INT>(d);
   }
 
-  // Should not happen
+  // We should never get here
   assert(false);
   return 0;
 }
