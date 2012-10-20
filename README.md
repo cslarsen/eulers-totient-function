@@ -7,16 +7,16 @@ This package consists of
   * a fast prime number sieve and
   * a fast implementation of Euler's phi function using the above.
 
-These are fast because
+They are fast because
 
   * we're using the recursive binary GCD algorithm with bit shifts,
-  * the Eratosthenes prime sieve uses bitsets for primality testing and
-  * the totient implementation is aware of Lehmer's conjecture, even-odd reductions
-    and that the phi function is multiplicative.
+  * bit sets for primality testing in the Eratosthenes sieve and
+  * Lehmer's conjecture, even-odd reductions and multiplicativity in the phi
+    function.
 
 The classes and functions are template-based, so you can plug in any integer
-type you want to, including multiple precision integers (GMPs; see note on
-big integers below).
+type you want to, including multiple precision integers (GMPs; although you
+should see the note below).
 
 You can also use the gcd function and prime number sieve separately.
 Finally, the code is in pure C++ and only relies on the standard library.
@@ -33,6 +33,8 @@ The implementation needs to store ALL prime numbers below a certain limit to
 be able to utilize the multiplicativity trick of the phi function.
 Unfortunately, this means that we can't really use the phi function for
 insanely big integers, because we would need too much memory.
+
+(Don't worry, I'm thinking about a way to fix this.)
 
 License
 -------
