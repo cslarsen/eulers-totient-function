@@ -1,22 +1,40 @@
 A fast implementation of Euler's Totient Function in C++
 ========================================================
 
-This package contains a very fast version of the phi-function:
+This package consists of
 
+  * a fast gcd function,
+  * a fast prime number sieve and
+  * a fast implementation of Euler's phi function using the above
+
+These are fast because
+
+  * we're using the recursive binary GCD algorithm with bit shifts,
+  * the Eratosthenes prime sieve uses bitsets for primality testing and
+  * the totient implementation is aware of Lehmer's conjecture, even-odd reductions
+    and that the phi function is multiplicative.
+
+The classes and functions are template-based, so you can plug in any integer
+type you want to, including multiple precision integers (GMPs; see note on
+big integers below).
+
+You can also use the gcd function and prime number sieve separately.
+Finally, the code is in pure C++ and only relies on the standard library.
+
+The phi function
+----------------
+For more information about Euler's totient function, please see
 https://en.wikipedia.org/wiki/Euler%27s_totient_function
 
-It uses several tricks to make it run fast and also relies on a very fast
-prime number sieve and a binary GCD algorithm.
+Notes on big integers
+---------------------
 
-In fact, the sieve and gcd function can be used separately if needed.
+The implementation needs to store ALL prime numbers below a certain limit to
+be able to utilize the multiplicativity trick of the phi function.
+Unfortunately, this means that we can't really use the phi function for
+insanely big integers, because we would need too much memory.
 
-Also, it is template based, so you can use it with native integer types or
-big integers like libgmp's mpz__class.  
-
-Other than that this package is written in pure C++ using nothing but the
-standard library.
-
-LICENSE
+License
 -------
 
 Copyright (c) 2012 Christian Stigen Larsen
@@ -25,7 +43,7 @@ http://csl.sublevel3.org
 Distributed under the BSD 3-clause license; see the file LICENSE for a copy
 of the full license text.
 
-USAGE EXAMPLES
+Usage examples
 --------------
 
 Note that the first time you invoke `phi()` it will start calculating a
@@ -34,6 +52,17 @@ couple of milliseconds, but for larger sizes (e.g., a billion) it can take
 several seconds!
 
 Here's a straight-forward example:
+
+    #include <iostream>
+    #include <inttypes.h>
+    #include "phi.h"
+
+    int main()
+    {
+      std::cout << phi<100>(12) << std::endl;
+    }
+
+Here's another:
 
     #include <iostream>
     #include <inttypes.h>
@@ -54,8 +83,8 @@ the prime number sieve.  It doesn't use exceptions, only assertions in debug
 mode.  To compile without assertions, use an appropriate compiler definition
 for your system (`-DNDEBUG` for GCC).
 
-BUILDING
---------
+Building and testing
+--------------------
 
 To build the test, just type `make check` and hope for the best:
 
@@ -105,8 +134,8 @@ To build the test, just type `make check` and hope for the best:
     user	0m2.029s
     sys	  0m0.097s
 
-USING IN YOUR PROGRAMS
-----------------------
+How to use it in your programs
+------------------------------
 
 Just `#include "phi.h"` and you should be set.
 
