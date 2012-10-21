@@ -17,8 +17,18 @@
 
 #include <vector>
 #include <inttypes.h>
+#include <math.h>
 #include "gcd.h"
 #include "primes.h"
+#include <iostream>
+
+template<typename INT>
+static bool less(const INT& n, const size_t& primes)
+{
+  return sizeof(n) < sizeof(size_t)?
+    static_cast<size_t>(n) <= primes :
+    n <= static_cast<INT>(primes);
+}
 
 template<size_t PRIMES, typename INT>
 INT phi(const INT& n)
@@ -30,7 +40,7 @@ INT phi(const INT& n)
     return 0;
 
   // Lehmer's conjecture
-  if ( primes.isprime(n) )
+  if ( less(n, primes.size()) && primes.isprime(n) )
     return n-1;
 
   // Even number?
@@ -42,13 +52,14 @@ INT phi(const INT& n)
   }
 
   // For all primes less than n ...
+  const INT sqrt_n = 1+sqrt(n);
   for ( typename std::vector<INT>::const_iterator p = primes.first();
-        p != primes.last() && *p <= n; ++p )
+        p != primes.last() && *p <= sqrt_n; ++p )
   {
     INT m = *p;
 
     // Is m not a factor?
-    if ( n % m )
+    if ( (n % m) != 0 )
       continue;
 
     // Phi is multiplicative
@@ -60,7 +71,20 @@ INT phi(const INT& n)
       : phi<PRIMES, INT>(m) * phi<PRIMES, INT>(o) * d / phi<PRIMES, INT>(d);
   }
 
-  // We've blown up our prime number sieve
-  assert(false);
-  return 0;
+  // Find out if n is really prime
+  INT p;
+  for ( p=2+*(primes.last()-1); p < n && (n % p) != 0; p += 2 )
+    ; // loop
+
+  // If n is prime, use Lehmer's conjecture
+  if ( p >= n )
+    return n-1;
+
+  // n must be composite, so divide up and recurse
+  INT o = n/p;
+  INT d = binary_gcd<INT>(p, o);
+
+  return d==1?
+      phi<PRIMES, INT>(p) * phi<PRIMES, INT>(o)
+    : phi<PRIMES, INT>(p) * phi<PRIMES, INT>(o) * d / phi<PRIMES, INT>(d);
 }

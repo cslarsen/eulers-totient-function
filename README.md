@@ -28,12 +28,15 @@ https://en.wikipedia.org/wiki/Euler%27s_totient_function
 Note on big integers
 --------------------
 
-The implementation needs to store ALL prime numbers below a certain limit to
-be able to utilize the multiplicativity trick of the phi function.
-Unfortunately, this means that we can't really use the phi function for
-insanely big integers, because we would need too much memory.
+For fast calculations of phi(n), we ideally want a prime number sieve that
+contains all the prime numbers below sqrt(n).  For very large n, however,
+this would take up too much memory.
 
-(Don't worry, I'm thinking about a way to fix this.)
+Because of this, the implementation will happily chug along when it reaches
+the end of the number sieve.  It will be slower, but at least it will still
+work.
+
+I haven't tested the speed on very large numbers yet.
 
 License
 -------
@@ -89,10 +92,10 @@ Building and testing
 
 To build the test, just type `make check` and hope for the best:
 
-    $ make check
+    $ make
     c++ -W -Wall -O3    test.cpp   -o test
     bash -c "time ./test"
-    Calculating 10000000 prime numbers
+    Calculating all primes below 10000000
     phi(0) = 0
     phi(56789) = 56160
     phi(113578) = 56160
@@ -111,8 +114,6 @@ To build the test, just type `make check` and hope for the best:
     phi(851835) = 449280
     phi(908624) = 449280
     phi(965413) = 898560
-
-    Calculating 100000000 prime numbers
     phi(1000000) = 400000
     phi(1561167) = 1024056
     phi(2122334) = 1058616
@@ -130,13 +131,93 @@ To build the test, just type `make check` and hope for the best:
     phi(8856338) = 4428168
     phi(9417505) = 7534000
     phi(9978672) = 3023680
+    phi( 78)= 24   phi( 89)= 88   phi(100)= 40   
+    phi(111)= 72   phi(122)= 60   phi(133)=108   
+    phi(144)= 48   phi(155)=120   phi(166)= 82   
+    phi(177)=116   phi(188)= 92   phi(199)=198   
+    phi(210)= 48   phi(221)=192   phi(232)=112   
+    phi(243)=162   phi(254)=126   phi(265)=208   
+    phi(276)= 88   phi(287)=240   phi(298)=148   
+    phi(309)=204   phi(320)=128   phi(331)=330   
+    phi(342)=108   phi(353)=352   phi(364)=144   
+    phi(375)=200   phi(386)=192   phi(397)=396   
+    phi(408)=128   phi(419)=418   phi(430)=168   
+    phi(441)=252   phi(452)=224   phi(463)=462   
+    phi(474)=156   phi(485)=384   phi(496)=240   
+    phi(507)=312   phi(518)=216   phi(529)=506   
+    phi(540)=144   phi(551)=504   phi(562)=280   
+    phi(573)=380   phi(584)=288   phi(595)=384   
+    phi(606)=200   phi(617)=616   phi(628)=312   
+    phi(639)=420   phi(650)=240   phi(661)=660   
+    phi(672)=192   phi(683)=682   phi(694)=346   
+    phi(705)=368   phi(716)=356   phi(727)=726   
+    phi(738)=240   phi(749)=636   phi(760)=288   
+    phi(771)=512   phi(782)=352   phi(793)=720   
+    phi(804)=264   phi(815)=648   phi(826)=348   
+    phi(837)=540   phi(848)=416   phi(859)=858   
+    phi(870)=224   phi(881)=880   phi(892)=444   
+    phi(903)=504   phi(914)=456   phi(925)=720   
+    phi(936)=288   phi(947)=946   phi(958)=478   
+    phi(969)=576   phi(980)=336   phi(991)=990   
+    1 OK:  phi(12) ==> 4 == 4
+    2 OK:  phi(12) ==> 4 == 4
+    3 OK:  phi(12) ==> 4 == 4
+    4 OK:  phi(1234) ==> 616 == 616
+    5 OK:  phi(12345) ==> 6576 == 6576
+    6 OK:  phi(123456) ==> 41088 == 41088
+    7 OK:  phi(1234567) ==> 1224720 == 1224720
+    8 OK:  phi(12345678) ==> 4027392 == 4027392
+    9 OK:  phi(123456789) ==> 82260072 == 82260072
+    10 OK:  phi(1234567890) ==> 329040288 == 329040288
+    11 OK:  phi(1234) ==> 616 == 616
+    12 OK:  phi(12345) ==> 6576 == 6576
+    13 OK:  phi(123456) ==> 41088 == 41088
+    14 OK:  phi(1234567) ==> 1224720 == 1224720
+    15 OK:  phi(12345678) ==> 4027392 == 4027392
+    16 OK:  phi(123456789) ==> 82260072 == 82260072
+    17 OK:  phi(1234567890) ==> 329040288 == 329040288
+    18 OK:  phi(1234) ==> 616 == 616
+    19 OK:  phi(12345) ==> 6576 == 6576
+    20 OK:  phi(123456) ==> 41088 == 41088
+    21 OK:  phi(1234567) ==> 1224720 == 1224720
+    22 OK:  phi(12345678) ==> 4027392 == 4027392
+    23 OK:  phi(123456789) ==> 82260072 == 82260072
+    24 OK:  phi(1234567890) ==> 329040288 == 329040288
+    25 OK:  phi(1234) ==> 616 == 616
+    26 OK:  phi(12345) ==> 6576 == 6576
+    27 OK:  phi(123456) ==> 41088 == 41088
+    28 OK:  phi(1234567) ==> 1224720 == 1224720
+    29 OK:  phi(12345678) ==> 4027392 == 4027392
+    30 OK:  phi(123456789) ==> 82260072 == 82260072
+    31 OK:  phi(1234567890) ==> 329040288 == 329040288
+    32 OK:  phi(1234) ==> 616 == 616
+    33 OK:  phi(12345) ==> 6576 == 6576
+    34 OK:  phi(123456) ==> 41088 == 41088
+    35 OK:  phi(1234567) ==> 1224720 == 1224720
+    36 OK:  phi(12345678) ==> 4027392 == 4027392
+    37 OK:  phi(123456789) ==> 82260072 == 82260072
+    38 OK:  phi(1234567890) ==> 329040288 == 329040288
+    39 OK:  phi(1234) ==> 616 == 616
+    40 OK:  phi(12345) ==> 6576 == 6576
+    41 OK:  phi(123456) ==> 41088 == 41088
+    42 OK:  phi(1234567) ==> 1224720 == 1224720
+    43 OK:  phi(12345678) ==> 4027392 == 4027392
+    44 OK:  phi(123456789) ==> 82260072 == 82260072
+    45 OK:  phi(1234567890) ==> 329040288 == 329040288
+    46 OK:  phi(1234) ==> 616 == 616
+    47 OK:  phi(12345) ==> 6576 == 6576
+    48 OK:  phi(123456) ==> 41088 == 41088
+    49 OK:  phi(1234567) ==> 1224720 == 1224720
+    50 OK:  phi(12345678) ==> 4027392 == 4027392
+    51 OK:  phi(123456789) ==> 82260072 == 82260072
+    52 OK:  phi(1234567890) ==> 329040288 == 329040288
+    53 OK:  phi(12345678901234567890) ==> 3256788124177920000 == 3256788124177920000
 
-    real	0m2.942s
-    user	0m2.029s
-    sys	  0m0.097s
+    real	0m0.243s
+    user	0m0.170s
+    sys	  0m0.013s
 
 How to use it in your programs
 ------------------------------
 
 Just `#include "phi.h"` and you should be set.
-
