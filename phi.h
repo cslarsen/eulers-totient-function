@@ -41,16 +41,17 @@ INT phi(const INT& n)
       : phi<PRIMES, INT>(m);
   }
 
-  // For all primes ...
+  // For all primes less than n ...
   for ( typename std::vector<INT>::const_iterator p = primes.first();
         p != primes.last() && *p <= n; ++p )
   {
     INT m = *p;
 
+    // Is m not a factor?
     if ( n % m )
       continue;
 
-    // phi is multiplicative
+    // Phi is multiplicative
     INT o = n/m;
     INT d = binary_gcd<INT>(m, o);
 
@@ -59,7 +60,7 @@ INT phi(const INT& n)
       : phi<PRIMES, INT>(m) * phi<PRIMES, INT>(o) * d / phi<PRIMES, INT>(d);
   }
 
-  // We should never get here
+  // We've blown up our prime number sieve
   assert(false);
   return 0;
 }
