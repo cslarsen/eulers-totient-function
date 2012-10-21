@@ -29,9 +29,12 @@ void test(const INT& n, const INT& expected)
   ++(ok? good : fail);
   cout << (fail+good) << " "
        << (ok? "OK: " : "FAIL:") << " "
-       << "phi(" << n << ") ==> " << actual
-       << (ok? " == " : " != ") << expected
-       << endl;
+       << "phi(" << n << ") ==> " << actual;
+
+  if ( !ok )
+    cout << " != " << expected;
+
+  cout << endl;
 }
 
 /*
