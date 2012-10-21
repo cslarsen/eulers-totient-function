@@ -22,21 +22,17 @@ void test1()
 
 void test2()
 {
-  #define LIMIT1 1000000
-  cout << "Calculating " << 10*(LIMIT1) << " prime numbers" << endl;
+  #define LIMIT 10000000
+  cout << "Calculating " << 10*(LIMIT) << " prime numbers" << endl;
 
-  for ( uint64_t n=0; n < LIMIT1; n += 56789 ) {
+  for ( uint64_t n=0; n < LIMIT/10; n += 56789 ) {
     cout << "phi(" << n << ") = "
-         << phi<10*LIMIT1>(n) << endl;
+         << phi<LIMIT>(n) << endl;
   }
 
-  #define LIMIT2 10000000
-  cout << endl;
-  cout << "Calculating " << 10*(LIMIT2) << " prime numbers" << endl;
-
-  for ( uint64_t n=1000000; n < LIMIT2; n += 1122334/2 ) {
+  for ( uint64_t n=1000000; n < LIMIT; n += 1122334/2 ) {
     cout << "phi(" << n << ") = "
-         << phi<10*LIMIT2>(n) << endl;
+         << phi<LIMIT>(n) << endl;
   }
 }
 
