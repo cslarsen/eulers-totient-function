@@ -13,7 +13,7 @@ INT binary_gcd(INT  u, INT  v)
 {
   INT shl = 0;
 
-  while ( u && v && u!=v ) {
+  while ( u>0 && v>0 && u!=v ) {
     // even numbers?
     bool eu = (u & 1) == 0;
     bool ev = (v & 1) == 0;
@@ -33,5 +33,5 @@ INT binary_gcd(INT  u, INT  v)
     }
   }
 
-  return !u? v<<shl : u<<shl;
+  return u==0? v<<shl : u<<shl;
 }
