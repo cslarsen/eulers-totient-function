@@ -22,9 +22,9 @@ Finally, the code is in pure C++ and only relies on the standard library.
 
 Design
 ------
-The library is designed for calling the phi function _multiple_ times; it
-trades memory for speed.  If you just need to calculate a one-off phi, you
-probably don't need this library.
+The library is designed to be fast at calculating the phi function _many_
+times.  For this, it trades memory for speed.  If you just need to calculate
+a one-off phi, you probably don't need this library.
 
 The phi function
 ----------------
