@@ -20,6 +20,12 @@ should see the note below).
 You can also use the gcd function and prime number sieve separately.
 Finally, the code is in pure C++ and only relies on the standard library.
 
+Design
+------
+The library is designed for calling the phi function _multiple_ times; it
+trades memory for speed.  If you just need to calculate a one-off phi, you
+probably don't need this library.
+
 The phi function
 ----------------
 For more information about Euler's totient function, please see
@@ -32,11 +38,15 @@ For fast calculations of phi(n), we ideally want a prime number sieve that
 contains all the prime numbers below sqrt(n).  For very large n, however,
 this would take up too much memory.
 
-Because of this, the implementation will happily chug along when it reaches
-the end of the number sieve.  It will be slower, but at least it will still
-work.
+Because of this, the implementation will happily chug along with a plain
+trial division when it reaches the end of the number sieve.  This is slow,
+but at least it works.
 
-I haven't tested the speed on very large numbers yet.
+The most glaring problem, though, is that gmplib doesn't work out of the
+box, because it lacks operators for bit shifting.  This means you need to
+implement these operators yourself.
+
+Also, I haven't tested the speed on very large numbers yet.
 
 License
 -------
