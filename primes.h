@@ -43,12 +43,12 @@ public:
 
   inline bool isprime(const INT& n) const
   {
-    return p[n];
+    return p[static_cast<size_t>(n)];
   }
 
   inline bool isprime_safe(const INT& n) const
   {
-    return p.at(n);
+    return p.at(static_cast<size_t>(n));
   }
 
   inline size_t size() const
