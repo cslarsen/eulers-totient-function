@@ -35,6 +35,10 @@ INT phi(const INT& n)
 {
   static prime_sieve<INT, PRIMES> primes;
 
+  // By definition
+  if ( n == 1 )
+    return 1;
+
   // Base case
   if ( n < 2 )
     return 0;

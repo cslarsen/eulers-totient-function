@@ -21,6 +21,16 @@ using namespace std;
 int fail = 0;
 int good = 0;
 
+void results()
+{
+  int total = fail + good;
+
+  cout << endl
+       << "RESULTS" << endl
+       << good << "/" << total << " OK" << endl
+       << fail << "/" << total << " FAILED" << endl;
+}
+
 template<size_t PRIMES, typename INT>
 void test(const INT& n, const INT& expected)
 {
@@ -44,6 +54,18 @@ void test(const INT& n, const INT& expected)
  */
 void test1()
 {
+  test<100>(0, 0);
+  test<100>(1, 1); 
+  test<100>(2, 1);
+  test<100>(3, 2);
+  test<100>(4, 2);
+  test<100>(5, 4);
+  test<100>(6, 2);
+  test<100>(7, 6);
+  test<100>(8, 4);
+  test<100>(9, 6);
+  test<100>(10, 4);
+
   test<100>(12, 4);
   test<10>(12, 4);
   test<3>(12, 4);
@@ -143,6 +165,7 @@ void test3()
 
 int main()
 {
+  atexit(results);
   test2();
   test3();
   test1();
