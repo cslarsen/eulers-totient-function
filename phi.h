@@ -35,6 +35,10 @@ INT phi(const INT& n)
 {
   static prime_sieve<INT, PRIMES> primes;
 
+  // Negative numbers
+  if ( n < 0 )
+    return phi<PRIMES, INT>(-n);
+
   // By definition
   if ( n == 1 )
     return 1;
