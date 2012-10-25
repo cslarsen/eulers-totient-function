@@ -60,12 +60,21 @@ of the full license text.
 Usage examples
 --------------
 
-Note that the first time you invoke `phi()` it will start calculating a
-given set of prime numbers (one million, by default).  This usually takes a
-couple of milliseconds, but for larger sizes (e.g., a billion) it can take
-several seconds!
+Note that the first time you invoke `phi()` it will start calculating a all
+primes below a certain number (one million, by default).  This usually takes
+a couple of milliseconds, but for larger limits (e.g., a billion) it can
+take up to several seconds!
 
-Here's a straight-forward example:
+To invoke phi, you need to feed it an upper limit for the prime sieve.  This
+number should ideally be the square root of the maximum number you will put
+into the phi function.  For example, to calculate phi(100) you can do
+`phi<10>(100)`.
+
+But don't change the limit, though.  Each time you change the limit, it will
+create a separate, static prime sieve.  So just `#define` a limit and use
+that in your programs.
+
+Here's a simple, complete example:
 
     #include <iostream>
     #include <inttypes.h>
