@@ -52,7 +52,7 @@ but at least it works.
 
 The most glaring problem, though, is that gmplib doesn't work out of the
 box, because it lacks operators for bit shifting.  This means you need to
-implement these operators yourself.
+implement these operators yourself. **Update: See `primes_gmp.cpp`**
 
 Also, I haven't tested the speed on very large numbers yet.
 
