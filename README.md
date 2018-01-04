@@ -20,6 +20,14 @@ should see the note below).
 You can also use the gcd function and prime number sieve separately.
 Finally, the code is in pure C++ and only relies on the standard library.
 
+Update
+------
+
+I added an unpolished version of `primes_gmp.cpp` that uses GMP for arbitrarily
+large integers. It implements Eulers totient function (phi) in C++ using
+libgmp, and includes an example to find two 256-bit prime numbers. You can
+easily yank that up to any number you like.
+
 Design
 ------
 The library is designed to be fast at calculating the phi function _many_
